@@ -10,7 +10,7 @@ First public draft of a weave compute engine, that can run on Raspberry Pi
 
 Copyright 2013 Garth Johnson as Weave.sh
 
-[![Build Status](https://travis-ci.org/ambled/weave-test-java.png)](https://travis-ci.org/ambled/weave.test-java)
+[![Build Status](https://travis-ci.org/ambled/weave-test-java.png)](https://travis-ci.org/ambled/weave-test-java)
 
 
 QuickStart

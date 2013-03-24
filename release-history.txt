@@ -1,2 +1,9 @@
+
+v0.0.3 - Fix typo in travis icon
+
+v0.0.2 - Test client now works on Raspberry Pi, with a preview release
+         of java 8 for arm with hardware float.
+         Create build and start scripts that will assist in evaluating
+
 v0.0.1 - This file added. A line in the sand, beyond here lie monsters
 

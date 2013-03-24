@@ -41,7 +41,7 @@ LOG_PATH="./log/"
 LOG_DATE=$(date +'%y%m%d-%H')
 
 ## uncomment the following line to dump the java logs into a file for review
-# WEAVE_LOG=" >> ./log/${LOG_DATE}.log "
+# WEAVE_LOG="${LOG_PATH}${LOG_DATE}.log"
 
 
 
@@ -59,7 +59,8 @@ fi
 ## Make sure java is here and executable
 if [ ! -x ${JAVA_EXEC} ]; then
   echo "Unable to locate java virtual machine at: ${JAVA_EXEC}"
-  echo "Please go here to download and install the Java SDK"
+  echo "Please go here to download and install the Java SDK for RaspberryPi"
+  echo "If you're using a different platform, install Java SDK >= v1.6"
   echo "  http://jdk8.java.net/fxarmpreview/"
   exit 1
 fi
@@ -84,8 +85,8 @@ MIN_MEMORY=100m
 
 ############### Now startup the client, enabling logging if requested ##################
 ## If WEAVE_LOG is set and has a path that exists
-if [ -s "${WEAVE_LOG}" ]; then
-  # Make sure we can open the log file
+if [ -n "${WEAVE_LOG}" ]; then
+  # Make sure we can access the log file
   touch ${WEAVE_LOG}
   if [ -f ${WEAVE_LOG} ];then
     ${JAVA_EXEC} -Xmx${MAX_MEMORY} -Xms${MIN_MEMORY} -XX:+CMSClassUnloadingEnabled sh.weave.alpha_engine ${REGISTERED_WORKER_ID} >> ${WEAVE_LOG}
