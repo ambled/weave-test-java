@@ -6,6 +6,7 @@
 #  
 # 
 
+cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 ############### Set registered user ##################
 #If you have registered, you can change the workerId
