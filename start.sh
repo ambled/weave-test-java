@@ -12,7 +12,36 @@ cd "$( dirname "${BASH_SOURCE[0]}" )"
 #If you have registered, you can change the workerId
 REGISTERED_WORKER_ID='hello-world'
 
+############### Set optional logfile location ##################
+## These setup a logfile if your interested in analyzing the output later
+##   The filename to use will be based on the hour that you start the client
+##   eg: <LOG_PATH>/130334-01.log
+LOG_PATH="./log/"
+LOG_DATE=$(date +'%y%m%d-%H')
 
+## uncomment the following line to dump the java logs into a file for review
+# WEAVE_LOG="${LOG_PATH}${LOG_DATE}.log"
+
+############### Set java location ##################
+## Use this location for the raspberry pi and the preview ARM jdk
+JAVA_EXEC=/opt/jdk1.8.0/bin/java
+
+############### Set java heap memory ##################
+## If you have a 256MB version B1 raspberry pi, use the following settings
+##   You may have to change your gpu_mem setting in /boot/config.txt (I have it set to 16)
+MAX_MEMORY=100m
+MIN_MEMORY=100m
+
+## If you have a 512MB version raspberry pi, use the following settings
+#MAX_MEMORY=256m
+#MIN_MEMORY=256m
+
+
+
+############### Load the values from the config file ###############
+if [ -f weave.conf ]; then
+  . weave.conf
+fi
 
 ############### Check User Agreements ###############
 ## Make sure user has acknowledged partner/network agreements
@@ -30,28 +59,6 @@ if [ "NONE" != "${UNACCEPTED_AGREEMENTS:-NONE}" ];then
   exit 1
 fi
 
-
-
-
-
-############### Set optional logfile location ##################
-## These setup a logfile if your interested in analyzing the output later
-##   The filename to use will be based on the hour that you start the client
-##   eg: <LOG_PATH>/130334-01.log
-LOG_PATH="./log/"
-LOG_DATE=$(date +'%y%m%d-%H')
-
-## uncomment the following line to dump the java logs into a file for review
-# WEAVE_LOG="${LOG_PATH}${LOG_DATE}.log"
-
-
-
-
-
-############### Set java location ##################
-## Use this location for the raspberry pi and the preview ARM jdk
-JAVA_EXEC=/opt/jdk1.8.0/bin/java
-
 ## If java is currently in your executable path, this will find it
 if [ ! -x ${JAVA_EXEC} ]; then
   JAVA_EXEC=$(which java)
@@ -65,24 +72,6 @@ if [ ! -x ${JAVA_EXEC} ]; then
   echo "  http://jdk8.java.net/fxarmpreview/"
   exit 1
 fi
-
-
-
-
-
-############### Set java heap memory ##################
-## If you have a 256MB version B1 raspberry pi, use the following settings
-##   You may have to change your gpu_mem setting in /boot/config.txt (I have it set to 16)
-MAX_MEMORY=100m
-MIN_MEMORY=100m
-
-## If you have a 512MB version raspberry pi, use the following settings
-#MAX_MEMORY=256m
-#MIN_MEMORY=256m
-
-
-
-
 
 ############### Now startup the client, enabling logging if requested ##################
 ## If WEAVE_LOG is set and has a path that exists
