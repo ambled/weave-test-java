@@ -39,8 +39,8 @@ MIN_MEMORY=100m
 
 
 ############### Load the values from the config file ###############
-if [ -f weave.conf ]; then
-  . weave.conf
+if [ -f /etc/weave.conf ]; then
+  . /etc/weave.conf
 fi
 
 ############### Check User Agreements ###############
