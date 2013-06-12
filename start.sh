@@ -10,7 +10,7 @@ cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 ############### Set registered user ##################
 #If you have registered, you can change the workerId
-REGISTERED_WORKER_ID='hello-world'
+REGISTERED_WORKER_ID=${PLURA_SESSION?hello-world}
 
 ############### Set optional logfile location ##################
 ## These setup a logfile if your interested in analyzing the output later
@@ -29,8 +29,8 @@ JAVA_EXEC=/opt/jdk1.8.0/bin/java
 ############### Set java heap memory ##################
 ## If you have a 256MB version B1 raspberry pi, use the following settings
 ##   You may have to change your gpu_mem setting in /boot/config.txt (I have it set to 16)
-MAX_MEMORY=100m
-MIN_MEMORY=100m
+MAX_MEMORY=${DOCKER_WEAVE_MAXMEM:-100m}
+MIN_MEMORY=${DOCKER_WEAVE_MINMEM:-100m}
 
 ## If you have a 512MB version raspberry pi, use the following settings
 #MAX_MEMORY=256m
@@ -56,7 +56,11 @@ done
 
 ## Bail if there are agreements to accept
 if [ "NONE" != "${UNACCEPTED_AGREEMENTS:-NONE}" ];then
-  exit 1
+  read -p "This application will share your computer, Do you understand? [y/n] " -n 1
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo -e "Aborting...\n"
+    exit 1
+  fi
 fi
 
 ## If java is currently in your executable path, this will find it
